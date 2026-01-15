@@ -1,0 +1,5 @@
+-i realized that the playerstats table will hold duplicate records if a player was traded across teams within a season. so Im implementing a PlayerSeasonTeams table to track what teams a player has played on in each season. 
+This avoids double counting and preserves correctness.
+
+-ran into issue in which i realized it would be difficult to use ip as a string to run queries. so i converted ip to outsPitched which is type int. this will make it easier to query for innings pitched questions
+

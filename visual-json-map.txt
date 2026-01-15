@@ -1,0 +1,13 @@
+response (dict)
+│
+├── "teams" (list)
+│     ├── [0] → dict
+│     │         ├── "id" → 147
+│     │         ├── "name" → Yankees
+│     │         └── ...
+│     └── [1] → dict
+│               ├── "id" → 121
+│               ├── "name" → Mets
+│               └── ...
+│
+└── "stadiums" (list)   ← could exist in other APIs
