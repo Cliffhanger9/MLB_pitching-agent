@@ -1,0 +1,6 @@
+@mlbapi_HostAddress = http://localhost:5111
+
+GET {{mlbapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
