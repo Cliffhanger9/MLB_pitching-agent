@@ -1,4 +1,17 @@
+# .NET build output
+bin/
+obj/
+
+# VS / Rider
+.vs/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
 .env
 .venv/
 __pycache__/
 .vscode/
+
