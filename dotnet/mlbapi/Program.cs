@@ -1,10 +1,13 @@
+using mlbapi.Data;
+using mlbapi.Models;
+using Dapper;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSingleton<DB>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +38,22 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+app.MapGet("/leaders/era", async (DB db, int season, int take=10, int outsPitched = 90) =>
+{
+    const string sql = @"
+        SELECT TOP (@take)
+            p.mlbamId AS mlbamId,
+            p.fullName AS fullName,
+            ps.era AS era,
+            ps.season AS season
+        FROM PitchingStats ps
+        JOIN Players p ON p.mlbamId = ps.mlbamId
+        WHERE ps.season=@season AND ps.outsPitched>=@outsPitched
+        ORDER BY ps.era ASC;";
+    using var conn = db.CreateConnection();
+    var rows = await conn.QueryAsync<EraLeader>(sql, new {season, take, outsPitched});
+    return Results.Ok(rows);
+});
 
 app.Run();
 
